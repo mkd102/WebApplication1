@@ -31,3 +31,12 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    appType: 'webApp'
+    WebAppName: 'meghatest12'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    ConnectedServiceName: 'Pay-As-You-Go(8c6c3372-968d-46a9-bc68-0cb1569099a0)'

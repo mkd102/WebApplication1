@@ -6,8 +6,7 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'windows-latest'
+pool: "Megha"
 
 variables:
   solution: '**/*.sln'
@@ -32,3 +31,18 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'FilePath'
+    TargetPath: '$(System.DefaultWorkingDirectory)'
+    
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Test1'
+    appType: 'webApp'
+    WebAppName: 'meghad'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'

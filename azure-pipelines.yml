@@ -44,5 +44,5 @@ steps:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Test1'
     appType: 'webApp'
-    WebAppName: 'megha'
+    WebAppName: 'meghad'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'

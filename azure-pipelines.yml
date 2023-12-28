@@ -27,8 +27,15 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: VSTest@2
+- task: VSTest@3
   inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+             **\*test*.dll
+             !**\*TestAdapter.dll
+             !**\obj\**
+             !**\*Test*\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
@@ -39,10 +46,4 @@ steps:
     publishLocation: 'FilePath'
     TargetPath: '$(System.DefaultWorkingDirectory)'
     
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Test1'
-    appType: 'webApp'
-    WebAppName: 'meghad'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+

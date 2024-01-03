@@ -8,6 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication1.Database;
+using WebApplication1.ExceptionHandling;
+using WebApplication1.Models;
+using WebApplication1.Security;
+using WebApplication1.Service;
 
 namespace WebApplication1
 {
@@ -23,6 +28,10 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IEmployeeService,EmployeeService>();
+            services.AddSingleton(typeof(IDAL<Employee>), typeof(EFDAL<Employee>));
+            services.AddMvc(options => options.EnableEndpointRouting = false);
+
             services.AddRazorPages();
         }
 
@@ -42,15 +51,21 @@ namespace WebApplication1
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
+            app.UseExceptionHandlingMiddleware();
+            app.UseTokenAuthorizationMiddleware();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
+
+
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapRazorPages();
+            //});
         }
     }
 }

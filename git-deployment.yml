@@ -2,24 +2,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: WebApplication1
+  name: web-app-1
   labels:
-    app: WebApplication1
+    app: web-app-1
 spec:
   selector:
     matchLabels:
-        app: WebApplication1
+        app: web-app-1
   replicas: 3
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app: WebApplication1
+        app: web-app-1
     spec:
       containers:
-        - name: WebApplication1
-          image: 886059204444.dkr.ecr.us-east-2.amazonaws.com/meghatest/WebApplication1:latest
+        - name: web-app-1
+          image: 886059204444.dkr.ecr.us-east-2.amazonaws.com/meghatest:latest
           ports:
             - containerPort: 80
               protocol: TCP
